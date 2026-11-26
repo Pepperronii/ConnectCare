@@ -1,0 +1,30 @@
+# Dependencies and generated output
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.tsbuildinfo
+*.log
+
+# Local environment and credentials
+.env*
+!.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+
+# Local data and backups
+*.sql
+*.sqlite*
+*.db
+*.dump
+*.bak
+*.zip
+*.7z
+*.tar
+*.gz
+/frontend/src-backup-admin/
+uploads/
