@@ -28,8 +28,6 @@ From the same terminal, start the API:
 npm run start:dev
 ```
 
-Once the API starts, open <http://localhost:3000/health> to check that it responds with `{"status":"ok"}`.
-
 In another PowerShell terminal opened at the repository root:
 
 ```powershell
