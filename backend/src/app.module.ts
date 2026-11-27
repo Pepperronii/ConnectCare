@@ -35,7 +35,7 @@ import { TicketStatusHistoriesModule } from './ticket-status-histories/ticket-st
         password: config.getOrThrow<string>('DB_PASSWORD'),
         database: config.getOrThrow<string>('DB_DATABASE'),
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: config.get('DB_SYNCHRONIZE') !== 'false',
       }),
     }),
 

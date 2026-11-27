@@ -10,7 +10,7 @@ ConnectCare is a customer-support ticketing app. Customers can submit and track 
 
 ## Run locally
 
-Use Node.js 24 with npm and a running MySQL server. Create an empty MySQL database for local development, such as `connectcare`, and make sure your local database user can create and update tables in it. The backend creates or updates the tables automatically when it starts.
+Use Node.js 24 with npm and a running MySQL server. Create an empty MySQL database for local development, such as `connectcare`, and make sure your local database user can create and update tables in it. The backend creates or updates the tables automatically when it starts. Set `DB_SYNCHRONIZE=false` to disable schema changes when using a database whose schema is managed separately.
 
 In a PowerShell terminal opened at the repository root:
 
