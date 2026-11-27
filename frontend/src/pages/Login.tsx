@@ -75,7 +75,7 @@ export default function Login() {
             Sign in to access your ConnectCare account.
           </p>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message" role="alert">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email address</label>

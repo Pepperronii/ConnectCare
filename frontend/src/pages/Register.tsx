@@ -91,7 +91,7 @@ export default function Register() {
             Get started with ConnectCare today.
           </p>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message" role="alert">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="fullName">Full name</label>
