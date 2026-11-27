@@ -36,4 +36,4 @@ npm ci
 npm run dev -- --strictPort
 ```
 
-Open <http://localhost:5173>. The frontend uses the API at <http://localhost:3000>.
+Open <http://localhost:5173>. The frontend uses the API at <http://localhost:3000> by default. To use another API address, set `VITE_API_URL` in `frontend/.env.local` and restart Vite. Use this variable for a URL only, since Vite includes it in the browser bundle.
