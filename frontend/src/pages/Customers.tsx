@@ -33,7 +33,8 @@ export default function Customers() {
   };
 
   useEffect(() => {
-    void loadCustomers();
+    const start = window.setTimeout(loadCustomers, 0);
+    return () => window.clearTimeout(start);
   }, []);
 
   const filteredCustomers = customers.filter((customer) => {

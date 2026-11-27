@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 
 import api from '../api/axios';
@@ -9,17 +9,7 @@ import type {
   RegisterData,
 } from '../types/auth';
 
-interface AuthContextType {
-  user: User | null;
-  login: (data: LoginData) => Promise<User>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => void;
-  isAuthenticated: boolean;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
-);
+import { AuthContext } from './useAuth';
 
 export function AuthProvider({
   children,
@@ -79,16 +69,4 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error(
-      'useAuth must be used inside AuthProvider',
-    );
-  }
-
-  return context;
 }

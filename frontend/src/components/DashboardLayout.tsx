@@ -1,6 +1,6 @@
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
 import { Headset, LayoutDashboard, Ticket, Users, LogOut, UserCog, Layers, History, ClipboardList } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 export default function DashboardLayout() {
   const {user,logout}=useAuth();
   if(!user) return <Navigate to="/login" replace/>;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search, Plus, Eye, RefreshCw } from 'lucide-react';
 
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import type { Ticket } from '../types/ticket';
 
 export default function Tickets() {
@@ -30,7 +30,8 @@ export default function Tickets() {
   };
 
   useEffect(() => {
-    void loadTickets();
+    const start = window.setTimeout(loadTickets, 0);
+    return () => window.clearTimeout(start);
   }, []);
 
   const filteredTickets = tickets.filter((ticket) => {

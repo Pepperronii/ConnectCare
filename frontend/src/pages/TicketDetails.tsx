@@ -5,7 +5,7 @@ import { ArrowLeft, Clock, Save } from 'lucide-react';
 import axios from 'axios';
 
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import type {
   Ticket,
   TicketHistory,

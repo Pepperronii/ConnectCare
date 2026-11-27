@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import type { Ticket } from '../types/ticket';
 
 export default function Dashboard() {

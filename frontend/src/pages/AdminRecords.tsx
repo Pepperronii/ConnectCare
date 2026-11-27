@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import axios from 'axios';
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { Link } from 'react-router-dom';
 
 type Kind = 'categories' | 'customers' | 'tickets' | 'histories';
 type RecordRow = Record<string, unknown>;
 type Field = { key: string; label: string; type?: 'number' | 'textarea'; options?: string[]; max?: number; optional?: boolean; createOnly?: boolean; editOnly?: boolean; nullable?: boolean };
+const limit = 10;
 const statuses = ['Pending', 'In Progress', 'Resolved'];
 const configs: Record<Kind, { title: string; endpoint: string; id: string; columns: string[]; fields: Field[] }> = {
   categories: { title: 'Ticket Categories', endpoint: 'ticket-categories', id: 'categoryId', columns: ['categoryId','categoryName','description'], fields: [
@@ -39,13 +40,17 @@ export default function AdminRecords({kind}: {kind:Kind}) {
   const [form,setForm] = useState<Record<string,string>>({});
   const [editing,setEditing] = useState<number|null>(null);
   const [open,setOpen] = useState(false);
-  const limit = 10;
-  async function load(p:number) {
+  const load = useCallback(async (p: number) => {
     setLoading(true);
     try { const r = await api.get(endpoint,{params:{page:p,limit}}); setRows(r.data.data); setTotal(r.data.total); }
     catch(err) {setRows([]);setError(message(err));} finally {setLoading(false);}
-  }
-  useEffect(()=>{if(user?.role==='Admin') void load(page);},[page,endpoint,user?.role]);
+  }, [endpoint]);
+
+  useEffect(() => {
+    if (user?.role !== 'Admin') return;
+    const start = window.setTimeout(() => void load(page), 0);
+    return () => window.clearTimeout(start);
+  }, [load, page, user?.role]);
   const fields = config.fields.filter(f=>editing===null ? !f.editOnly : !f.createOnly);
   function start(row?:RecordRow) {
     setEditing(row ? Number(row[config.id]) : null);

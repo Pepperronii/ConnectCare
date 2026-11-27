@@ -1,11 +1,11 @@
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Plus, Pencil, Trash2, Users as UsersIcon } from 'lucide-react';
 import axios from 'axios';
 
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 interface UserRecord {
   userId: number;
@@ -15,11 +15,25 @@ interface UserRecord {
   createdAt: string;
 }
 
+const limit = 10;
+
 const initialForm = {
   fullName: '',
   email: '',
   password: '',
   role: 'Customer',
+};
+
+const getError = (err: unknown) => {
+  if (axios.isAxiosError(err)) {
+    const message = err.response?.data?.message;
+
+    return Array.isArray(message)
+      ? message.join(', ')
+      : message || 'Request failed.';
+  }
+
+  return 'Something went wrong.';
 };
 
 export default function Users() {
@@ -39,21 +53,9 @@ export default function Users() {
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
 
-  const limit = 10;
 
-  const getError = (err: unknown) => {
-    if (axios.isAxiosError(err)) {
-      const message = err.response?.data?.message;
 
-      return Array.isArray(message)
-        ? message.join(', ')
-        : message || 'Request failed.';
-    }
-
-    return 'Something went wrong.';
-  };
-
-  const loadUsers = async (currentPage: number) => {
+  const loadUsers = useCallback(async (currentPage: number) => {
     setLoading(true);
 
     try {
@@ -71,13 +73,13 @@ export default function Users() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (user?.role === 'Admin') {
-      void loadUsers(page);
-    }
-  }, [page, user?.role]);
+    if (user?.role !== 'Admin') return;
+    const start = window.setTimeout(() => void loadUsers(page), 0);
+    return () => window.clearTimeout(start);
+  }, [loadUsers, page, user?.role]);
 
   const openCreate = () => {
     setEditing(null);

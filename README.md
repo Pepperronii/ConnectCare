@@ -17,7 +17,7 @@ In a PowerShell terminal opened at the repository root:
 ```powershell
 cd backend
 npm ci
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
 Open `backend/.env` and set `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, and `DB_DATABASE` for your local database. Set `JWT_SECRET` to a long, random value. Keep `PORT=3000` for the default frontend configuration. If you serve the frontend from a different origin, set `FRONTEND_ORIGIN` to that exact origin, including its scheme and port when applicable. If you already have a local `backend/.env`, reuse it and skip the copy command.
