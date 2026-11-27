@@ -26,6 +26,14 @@ Set the values in `backend/.env` for your machine.
 
 Start the API with `npm run start:dev`. Open <http://localhost:3000/> to verify that it responds.
 
+## Last successful login
+
+The backend records `users.lastLoginAt` when sign-in succeeds. Existing accounts start with a blank timestamp until their next successful login. Local schema synchronization adds the column on startup. If schema synchronization is disabled, add the nullable column before starting the updated API.
+
+```sql
+ALTER TABLE users ADD COLUMN lastLoginAt DATETIME(3) NULL;
+```
+
 ## API routes
 
 | Method and path | Purpose |

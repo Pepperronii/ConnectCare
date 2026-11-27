@@ -102,9 +102,14 @@ export class AuthService {
       role: user.role,
     };
 
+    const accessToken = await this.jwtService.signAsync(payload);
+    await this.userRepository.update(user.userId, {
+      lastLoginAt: () => 'CURRENT_TIMESTAMP(3)',
+    });
+
     return {
       message: 'Login successful',
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: accessToken,
       user: {
         userId: user.userId,
         fullName: user.fullName,

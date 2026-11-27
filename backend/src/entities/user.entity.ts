@@ -26,6 +26,9 @@ export class User {
   })
   role!: string;
 
+  @Column({ type: 'datetime', precision: 3, nullable: true, select: false })
+  lastLoginAt!: Date | null;
+
   @CreateDateColumn({ type: 'datetime' })
   createdAt!: Date;
 }
