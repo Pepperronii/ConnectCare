@@ -166,8 +166,14 @@ export default function CreateTicket() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={6}
+            maxLength={10000}
+            aria-describedby="description-length"
             required
           />
+
+          <p id="description-length" className="form-description">
+            {description.length.toLocaleString()} / 10,000 characters
+          </p>
 
           <label htmlFor="priority">Priority</label>
 
