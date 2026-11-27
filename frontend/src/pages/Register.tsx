@@ -21,6 +21,12 @@ export default function Register() {
     e.preventDefault();
     setError('');
 
+    const trimmedName = fullName.trim();
+    if (!trimmedName) {
+      setError('Enter your full name.');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
@@ -29,7 +35,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await register({ fullName, email, password });
+      await register({ fullName: trimmedName, email, password });
 
       navigate('/login');
     } catch (err) {
@@ -100,6 +106,7 @@ export default function Register() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 autoComplete="name"
+                maxLength={100}
                 required
               />
             </div>
@@ -116,6 +123,7 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
+                maxLength={150}
                 required
               />
             </div>
